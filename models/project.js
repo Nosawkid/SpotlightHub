@@ -30,9 +30,9 @@ const professionSchema = new Schema({
         required: [true, "User id cannot be empty"],
       },
       status: {
-        type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
+        type: Number,
+        enum: [0, 1, 2],
+        default: 0,
       },
       message: {
         type: String,
