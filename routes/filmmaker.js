@@ -1,5 +1,6 @@
 const filmMakerRoutes = require("express").Router();
 const Project = require("../models/project");
+const User = require("../models/user");
 const { userExtractor } = require("../utils/middlewares");
 
 // Create Project
@@ -17,6 +18,12 @@ filmMakerRoutes.post("/project", userExtractor, async (req, res) => {
     message: "Project Creation Success",
     data: project,
   });
+});
+
+// View Filmmaker Specific Projects
+filmMakerRoutes.get("/project", userExtractor, async (req, res) => {
+  const projects = await Project.find({ postedBy: req.user.id });
+  res.status(200).json(projects);
 });
 
 module.exports = filmMakerRoutes;

@@ -45,6 +45,28 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
+    workHistory: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+        references: [
+          {
+            links: {
+              type: String,
+            },
+            image: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
   },
   { timestamps: true }
 );
