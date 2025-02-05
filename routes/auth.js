@@ -24,6 +24,7 @@ authRoute.post("/authenticate", async (req, res) => {
   const userToken = {
     username: user.username,
     id: user._id,
+    role: user.role,
   };
   const token = jwt.sign(userToken, process.env.SECRET, {
     expiresIn: "24h",

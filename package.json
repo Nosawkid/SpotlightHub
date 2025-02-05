@@ -4,7 +4,9 @@
   "description": "A community that helps small-scale fim makers and artists to find each other and collabborate on exciting projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "MIT",

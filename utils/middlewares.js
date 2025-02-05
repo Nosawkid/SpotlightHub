@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const unknownEndpoints = (req, res, next) => {
   res.status(404).send({ error: "No Resource found" });
 };
@@ -27,7 +29,32 @@ const errorHandler = (error, req, res, next) => {
   next(error);
 };
 
+const extractToken = (req, res, next) => {
+  const authorization = req.get("authorization");
+  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+    req.token = authorization.slice(7);
+  } else {
+    req.token = null;
+  }
+  next();
+};
+
+const userExtractor = async (req, res, next) => {
+  const token = req.token;
+  if (!token) {
+    return res.status(401).json({ error: "Token Required for this operation" });
+  }
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return res.status(401).json({ error: "Unauthorized User" });
+  }
+  req.user = decodedToken;
+  next();
+};
+
 module.exports = {
   unknownEndpoints,
   errorHandler,
+  extractToken,
+  userExtractor,
 };
